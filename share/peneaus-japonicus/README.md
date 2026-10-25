@@ -411,6 +411,7 @@ python skill/scripts/check_article.py runs/peneaus-japonicus/A-with/output.md --
 | 本正文 | `share/peneaus-japonicus/README.md` |
 | 判读输出（含 25 条锚点索引） | `runs/peneaus-japonicus/A-with/output.md` |
 | 执行过程记录 | `runs/peneaus-japonicus/A-with/log.md` |
+| 判读提纲（场景与约束，非事前验收标准） | `cases/peneaus-japonicus/task.md` |
 | 论文原件 PDF（CC BY 4.0） | `materials/peneaus-japonicus/paper.pdf` |
 | 论文提取文本（67,438 字符） | `materials/peneaus-japonicus/skeletonization_mv.txt` |
 | 段落索引（144 段） | `materials/peneaus-japonicus/index.json` |
