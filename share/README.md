@@ -300,7 +300,7 @@ total=47 bad=0
 ```bash
 # 步骤 1：生成段落索引（所有锚点的唯一来源）
 python skill/scripts/extract_paper.py materials/2610.31478.txt \
-       --out-json /tmp/index.json
+       --out-json index.json
 # 预期：输出段落数（本次 146 段），每段含 start/end 字符位置
 
 # 步骤 2（可选）：人工核实关键锚点是否落在原文对应位置
@@ -311,7 +311,11 @@ python skill/scripts/locate_quote.py materials/2610.31478.txt "Video-LLaMA 8B"
 # 步骤 3：对判读输出做结构自检
 python skill/scripts/check_article.py runs/A-with/output.md --mode audit
 # 预期：7 项全 PASS，退出码 0
+```
 
+> **Windows 提示**：`--out-json` 请用相对路径（如 `index.json`）。Windows 下 Python 对 `/tmp/xxx` 的解析与 Git Bash 不一致，写成 `/tmp/...` 可能报文件不存在——这不是脚本问题，改相对路径即可。本次实测环境为 Windows + Git Bash + Python 3.13.14。
+
+```bash
 # 步骤 4：核对定量外推的每个输入能否在原文找到
 #   把 runs/A-with/output.md 文末「锚点原文片段索引」的 47 条逐条切片回原文比对
 #   本次结果：total=47 bad=0
