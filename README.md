@@ -284,6 +284,8 @@ science-explainer/
     └── peneaus-japonicus/README.md  # 第二篇：对比基线可用性判读
 ```
 
+`runs/`、`cases/`、`materials/` 三类是运行产物与论文原件，不入库（见 `.gitignore`），随比赛材料包提供；正文中引用这些路径时会指明所在位置。
+
 ---
 
 ## 示例

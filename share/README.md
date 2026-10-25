@@ -92,13 +92,17 @@ python skill/scripts/check_article.py <判读输出.md> --mode audit
 
 ## 材料构成
 
-| 目录 | 内容 |
-|---|---|
-| `share/` | 两篇分享正文（入口即本页） |
-| `runs/` | 判读输出与执行过程记录（含纠错日志） |
-| `cases/` | 任务定义与验收标准（运行前写定） |
-| `materials/` | 论文原件与提取文本、段落索引 |
-| `skill/` | `science-explainer` v0.2.1 源码 |
+正文里引用的路径分两类，请注意它们的所在位置不同：
+
+| 目录 | 内容 | 位置 |
+|---|---|---|
+| `share/` | 两篇分享正文（入口即本页） | 本仓库 + 材料包 |
+| `skill/` | `science-explainer` v0.2.1 源码 | 本仓库 + 材料包 |
+| `runs/<案例>/` | 判读输出与执行过程记录（含纠错日志） | **仅材料包** |
+| `cases/<案例>/` | 任务定义与验收标准（运行前写定） | **仅材料包** |
+| `materials/<案例>/` | 论文原件、提取文本、段落索引 | **仅材料包** |
+
+`runs/`、`cases/`、`materials/` 三类是运行产物与论文原件，体积与版权原因不入库，随比赛材料包提供。两篇的目录名分别为 `mog-vlm` 与 `peneaus-japonicus`——正文里写的 `runs/mog-vlm/A-with/output.md` 等路径，指的就是材料包内的这一层。
 
 ## License
 

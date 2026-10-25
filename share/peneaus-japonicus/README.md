@@ -295,17 +295,17 @@ RMSE/cm           0.469       0.474     0.450          0.467
 
 ```bash
 # 步骤 1：生成段落索引（所有锚点的唯一来源）
-python skill/scripts/extract_paper.py materials/skeletonization_mv.txt \
+python skill/scripts/extract_paper.py materials/peneaus-japonicus/skeletonization_mv.txt \
        --out-json index.json
 # 预期：144 段 / 7 章节 / 67,438 字符
 
 # 步骤 2：核实关键引文位置（验证发现四：这不是水下实验）
-python skill/scripts/locate_quote.py materials/skeletonization_mv.txt "controlled laboratory conditions"
-python skill/scripts/locate_quote.py materials/skeletonization_mv.txt "A Redmi K60 smartphone"
+python skill/scripts/locate_quote.py materials/peneaus-japonicus/skeletonization_mv.txt "controlled laboratory conditions"
+python skill/scripts/locate_quote.py materials/peneaus-japonicus/skeletonization_mv.txt "A Redmi K60 smartphone"
 # 预期：pos 10135 与 10169 附近
 
 # 步骤 3：结构自检
-python skill/scripts/check_article.py runs/A-with/output.md --mode audit
+python skill/scripts/check_article.py runs/peneaus-japonicus/A-with/output.md --mode audit
 # 预期：7 项全 PASS，退出码 0
 
 # 步骤 4：核对全部 25 条锚点
@@ -386,7 +386,7 @@ python skill/scripts/check_article.py runs/A-with/output.md --mode audit
 | 盈亏平衡门槛（1.245 / 0.898 / 0.238 pp） | 我的推导 |
 | 统计检验密度对比表 | 我的逐节统计 |
 | 「这不是水下实验」的判定 | 我的全文检索 + 成像条件核对 |
-| 五段判读输出 `runs/A-with/output.md` | 我的产出，25 条锚点全经验证 |
+| 五段判读输出 `runs/peneaus-japonicus/A-with/output.md` | 我的产出，25 条锚点全经验证 |
 | 对轻度组「应设切换判据」的建议 | 我的推断（`I`） |
 
 ### 10.3 AI 参与的边界

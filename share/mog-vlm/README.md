@@ -113,7 +113,7 @@
 | 项 | 值 |
 |---|---|
 | 论文 | arXiv:2610.31478v1，2026-10-22 |
-| 原件 | PDF 随包提供（`materials/2610.31478.pdf`），72,537 字符纯文本 |
+| 原件 | PDF 随包提供（`materials/mog-vlm/2610.31478.pdf`），72,537 字符纯文本 |
 | 提取方式 | PyMuPDF 1.27.2 → `extract_paper.py --out-json` → 146 段索引 |
 | 阅读范围 | 全文 1814 行，含正文 + 附录 A/B/C/D |
 
@@ -236,7 +236,7 @@ BF16 权重：19 × 10^9 × 2 字节 = 38 GB
 
 漏掉的内容恰恰是关键的：附录 A.6 的 Table 14 是「增益来自算力分配位置」的核心证据；附录 A.4 是 σ 敏感性；附录 B 是入侵类的失败案例（摩托车只得 0.2 分）；附录 D 是作者自述的光照/抖动局限。
 
-**纠正方式**：人工通读全文 1814 行后重做，新增 8 条证据。**漏读的版本没有删**，保留为 `runs/A-with/output_v1_incomplete.md` 供复核。
+**纠正方式**：人工通读全文 1814 行后重做，新增 8 条证据。**漏读的版本没有删**，保留为 `runs/mog-vlm/A-with/output_v1_incomplete.md` 供复核。
 
 **第二次：结构合规但存在越界引用**
 
@@ -299,17 +299,17 @@ total=47 bad=0
 
 ```bash
 # 步骤 1：生成段落索引（所有锚点的唯一来源）
-python skill/scripts/extract_paper.py materials/2610.31478.txt \
+python skill/scripts/extract_paper.py materials/mog-vlm/2610.31478.txt \
        --out-json index.json
 # 预期：输出段落数（本次 146 段），每段含 start/end 字符位置
 
 # 步骤 2（可选）：人工核实关键锚点是否落在原文对应位置
-python skill/scripts/locate_quote.py materials/2610.31478.txt "VideoLLaMA3-7B"
-python skill/scripts/locate_quote.py materials/2610.31478.txt "Video-LLaMA 8B"
+python skill/scripts/locate_quote.py materials/mog-vlm/2610.31478.txt "VideoLLaMA3-7B"
+python skill/scripts/locate_quote.py materials/mog-vlm/2610.31478.txt "Video-LLaMA 8B"
 # 预期：分别返回 pos 27325 附近 与 pos 70511 附近 —— 这就是发现二的证据
 
 # 步骤 3：对判读输出做结构自检
-python skill/scripts/check_article.py runs/A-with/output.md --mode audit
+python skill/scripts/check_article.py runs/mog-vlm/A-with/output.md --mode audit
 # 预期：7 项全 PASS，退出码 0
 ```
 
@@ -317,7 +317,7 @@ python skill/scripts/check_article.py runs/A-with/output.md --mode audit
 
 ```bash
 # 步骤 4：核对定量外推的每个输入能否在原文找到
-#   把 runs/A-with/output.md 文末「锚点原文片段索引」的 47 条逐条切片回原文比对
+#   把 runs/mog-vlm/A-with/output.md 文末「锚点原文片段索引」的 47 条逐条切片回原文比对
 #   本次结果：total=47 bad=0
 
 # 步骤 5：自行验算三个卡点
@@ -360,7 +360,7 @@ python skill/scripts/check_article.py runs/A-with/output.md --mode audit
 | 内容 | 性质 |
 |---|---|
 | 判读场景设定（16 路 / 4090 / <2s / 三类异常） | 我构造的目标条件 |
-| 五段判读输出 `runs/A-with/output.md` | 我（AI 辅助）产出，全部锚点经脚本校验 |
+| 五段判读输出 `runs/mog-vlm/A-with/output.md` | 我（AI 辅助）产出，全部锚点经脚本校验 |
 | 四个「读不出来」的发现 | 我通过附表交叉比对与反推得到 |
 | 三段定量外推算式 | 我按论文数字换算，公开了算式与假设 |
 | `science-explainer` v0.2.1（含段 3.5 与 C12 自检） | 我的开源作品，MIT |
@@ -399,16 +399,16 @@ python skill/scripts/check_article.py runs/A-with/output.md --mode audit
 
 | 内容 | 路径 |
 |---|---|
-| 本正文 | `share/README.md` |
-| 判读输出（终稿，含 47 条锚点索引） | `runs/A-with/output.md` |
-| 判读输出（v1 漏读附录版，保留作对照） | `runs/A-with/output_v1_incomplete.md` |
-| 执行过程与三次纠错记录 | `runs/A-with/log.md` |
-| 任务定义 / 验收标准 | `cases/A_task.md`、`cases/A_criteria.md` |
-| 论文原件 PDF | `materials/2610.31478.pdf` |
-| 论文提取文本 | `materials/2610.31478.txt` |
-| 段落索引 | `materials/2610.31478.index.json` |
+| 本正文 | `share/mog-vlm/README.md` |
+| 判读输出（终稿，含 47 条锚点索引） | `runs/mog-vlm/A-with/output.md` |
+| 判读输出（v1 漏读附录版，保留作对照） | `runs/mog-vlm/A-with/output_v1_incomplete.md` |
+| 执行过程与三次纠错记录 | `runs/mog-vlm/A-with/log.md` |
+| 任务定义 / 验收标准 | `cases/mog-vlm/A_task.md`、`cases/mog-vlm/A_criteria.md` |
+| 论文原件 PDF | `materials/mog-vlm/2610.31478.pdf` |
+| 论文提取文本 | `materials/mog-vlm/2610.31478.txt` |
+| 段落索引 | `materials/mog-vlm/2610.31478.index.json` |
 | 技能源码 v0.2.1 | `skill/` |
-| 复用与边界案例 | `runs/B-reuse/`、`runs/C-anomaly/` |
+| 复用与边界案例 | `runs/mog-vlm/B-reuse/`、`runs/mog-vlm/C-anomaly/` |
 
 **引用格式**
 
