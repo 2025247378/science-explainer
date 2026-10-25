@@ -1,0 +1,51 @@
+# —— Python 运行时产物 ——
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# —— 虚拟环境 ——
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# —— 测试与缓存 ——
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# —— 脚本运行时产物（论文索引、提取缓存）——
+*.index.json
+cache.txt
+*.extracted.txt
+
+# —— 技能运行时的输出目录 ——
+science_explainer_articles/
+science_explainer_audits/
+
+# —— 编辑器与操作系统 ——
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# —— Agent / 技能平台的本地私有配置（不得入库）——
+_user_meta.json
+.claude/
+.cursor/
+.aider*
+.config/
+.env
+.env.local
