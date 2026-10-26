@@ -1,2 +1,11 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# 行尾固定为 LF，保证任何平台检出后字节数一致。
+# 理由：share/ 下的正文与 tools/ 下的脚本以 SHA-256 作为「材料包与公开仓库一致」
+# 的凭据；若 Windows 检出时被 core.autocrlf 转成 CRLF，字节数与哈希都会变，
+# 该凭据即失效。因此对这两类文件显式声明 eol=lf。
+*.md   text eol=lf
+*.py   text eol=lf
+*.json text eol=lf
+*.txt  text eol=lf
