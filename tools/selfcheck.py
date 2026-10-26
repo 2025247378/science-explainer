@@ -27,6 +27,12 @@ LIMIT = 245_760          # 赛题硬上限 240 KiB
 RECOMMENDED = 204_800    # 赛题建议值 200 KiB
 SKIP = {".git", "__pycache__", "node_modules", ".venv", "venv"}
 
+# 复现步骤运行后会就地生成、且可由脚本一条命令重建的产物。
+# 容量应按「提交时的材料包」计，不能因为读者多跑了一步就判超限，
+# 因此这些文件单独统计并在输出里点明，不计入 measured_bytes。
+#   index.json —— 步骤 1 的段落索引（约 87 KB），正文材料索引已注明「不随包提供」
+RUNTIME_ARTIFACTS = {"index.json", "cache.txt"}
+
 ABS_PATH = [
     re.compile(r"[A-Za-z]:[\\/](?:Users|Documents|WorkBuddy|code|dev)[\\/]", re.I),
     re.compile(r"/home/[a-z0-9_-]+/"),
@@ -53,7 +59,9 @@ def files(root: Path):
 
 
 def c_capacity(root: Path) -> dict:
-    fs = list(files(root))
+    fs_all = list(files(root))
+    runtime = [p for p in fs_all if p.name in RUNTIME_ARTIFACTS]
+    fs = [p for p in fs_all if p.name not in RUNTIME_ARTIFACTS]
     total = sum(p.stat().st_size for p in fs)
     return {
         "name": "capacity",
@@ -66,6 +74,12 @@ def c_capacity(root: Path) -> dict:
         "under_limit": total <= LIMIT,
         "under_recommended": total <= RECOMMENDED,
         "file_count": len(fs),
+        "excluded_runtime_artifacts": [
+            {"path": p.relative_to(root).as_posix(),
+             "bytes": p.stat().st_size,
+             "reason": "步骤 1 可一条命令重建，不计入提交容量"}
+            for p in runtime
+        ],
         "pass": total <= LIMIT and len(fs) <= 500,
     }
 
@@ -240,6 +254,9 @@ def main() -> int:
                   f"；距硬上限余 {c['headroom_to_limit']:,} B"
                   f"，距建议值余 {c['headroom_to_recommended']:,} B")
             print(f"        文件数 {c['file_count']}")
+            for x in c["excluded_runtime_artifacts"]:
+                print(f"        已排除运行时产物 {x['path']}"
+                      f"（{x['bytes']:,} B，{x['reason']}）")
         elif c["name"] == "structure":
             print(f"        缺失：{', '.join(c['missing'])}" if c["missing"]
                   else f"        必需文件 {len(c['required'])} 项齐备")
